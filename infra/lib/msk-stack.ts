@@ -27,5 +27,6 @@ export class MskStack extends Stack {
       ebsStorageInfo: { volumeSize: 100 },
       removalPolicy: RemovalPolicy.DESTROY,
     });
+    this.cluster.connections.allowInternally(ec2.Port.allTraffic());
   }
 }
