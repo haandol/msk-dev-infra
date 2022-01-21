@@ -22,5 +22,5 @@ const mskStack = new MskStack(app, `${ns}MskStack`, {
 mskStack.addDependency(vpcStack);
 
 const tags = cdk.Tags.of(app)
-tags.add(`Namespace`, ns);
-tags.add(`Stage`, stage);
+tags.add(`codebrid:kalender:namespace`, ns);
+tags.add(`codebrid:stage`, stage);
