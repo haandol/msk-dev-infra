@@ -1,4 +1,4 @@
-import { Stack, StackProps, RemovalPolicy } from 'aws-cdk-lib';
+import { Stack, StackProps, CfnOutput, RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as msk from '@aws-cdk/aws-msk-alpha';
@@ -14,19 +14,21 @@ export class MskStack extends Stack {
   constructor(scope: Construct, id: string, props: IProps) {
     super(scope, id, props);
 
-    const ns = this.node.tryGetContext('ns')
+    const ns: string = this.node.tryGetContext('ns')!
 
     this.cluster = new msk.Cluster(this, `MskCluster`, {
-      clusterName: `${ns}-cluster`,
+      clusterName: `${ns.toLowerCase()}`,
       kafkaVersion: msk.KafkaVersion.V2_8_1,
       numberOfBrokerNodes: 2,
       vpc: props.vpc,
       vpcSubnets: { subnetType: ec2.SubnetType.PRIVATE_WITH_NAT },
       securityGroups: [props.securytyGroup],
-      instanceType: ec2.InstanceType.of(ec2.InstanceClass.M5, ec2.InstanceSize.LARGE),
+      instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.SMALL),
       ebsStorageInfo: { volumeSize: 100 },
       removalPolicy: RemovalPolicy.DESTROY,
     });
     this.cluster.connections.allowInternally(ec2.Port.allTraffic());
+
+    new CfnOutput(this, `${ns}ClusterArn`, { value: this.cluster.clusterArn });
   }
 }

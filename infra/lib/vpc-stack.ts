@@ -19,7 +19,7 @@ export class VpcStack extends Stack {
   }
 
   get availabilityZones(): string[] {
-    const azs = this.node.tryGetContext('availabilityZones');
+    const azs = this.node.tryGetContext('availabilityZones')!;
     return azs
   }
 }

@@ -4,7 +4,8 @@ import * as cdk from 'aws-cdk-lib';
 import { VpcStack } from '../lib/vpc-stack';
 import { MskStack } from '../lib/msk-stack';
 
-const ns = 'KalenderDev';
+const stage = 'Dev'
+const ns = `Kalender${stage}`;
 
 const app = new cdk.App({
   context: {
@@ -19,3 +20,7 @@ const mskStack = new MskStack(app, `${ns}MskStack`, {
   securytyGroup: vpcStack.securityGroup,
 });
 mskStack.addDependency(vpcStack);
+
+const tags = cdk.Tags.of(app)
+tags.add(`Namespace`, ns);
+tags.add(`Stage`, stage);
