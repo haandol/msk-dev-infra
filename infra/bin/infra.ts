@@ -22,5 +22,5 @@ const mskStack = new MskStack(app, `${ns}MskStack`, {
 mskStack.addDependency(vpcStack);
 
 const tags = cdk.Tags.of(app)
-tags.add(`codebrick:namespace`, ns.toLowerCase());
-tags.add(`codebrick:stage`, stage.toLowerCase());
+tags.add(`codebrick:namespace`, ns);
+tags.add(`codebrick:stage`, stage);
