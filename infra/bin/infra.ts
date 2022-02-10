@@ -5,7 +5,7 @@ import { VpcStack } from '../lib/vpc-stack';
 import { MskStack } from '../lib/msk-stack';
 
 const stage = 'Dev'
-const ns = `Kalender${stage}`;
+const ns = `KalenderTest${stage}`;
 
 const app = new cdk.App({
   context: {
