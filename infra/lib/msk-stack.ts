@@ -25,6 +25,11 @@ export class MskStack extends Stack {
       securityGroups: [props.securytyGroup],
       instanceType: ec2.InstanceType.of(ec2.InstanceClass.T3, ec2.InstanceSize.SMALL),
       ebsStorageInfo: { volumeSize: 100 },
+      monitoring: {
+        clusterMonitoringLevel: msk.ClusterMonitoringLevel.PER_TOPIC_PER_PARTITION,
+        enablePrometheusJmxExporter: false,
+        enablePrometheusNodeExporter: true,
+      },
       removalPolicy: RemovalPolicy.DESTROY,
     });
     this.cluster.connections.allowInternally(ec2.Port.allTraffic());
