@@ -4,8 +4,8 @@ import * as cdk from 'aws-cdk-lib';
 import { VpcStack } from '../lib/vpc-stack';
 import { MskStack } from '../lib/msk-stack';
 
-const stage = 'Dev'
-const ns = `KalenderTest${stage}`;
+const stage = 'Test'
+const ns = `KalenderMsk${stage}`;
 
 const app = new cdk.App({
   context: {
