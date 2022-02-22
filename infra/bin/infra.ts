@@ -3,24 +3,20 @@ import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { VpcStack } from '../lib/vpc-stack';
 import { MskStack } from '../lib/msk-stack';
-
-const stage = 'Test'
-const ns = `KalenderMsk${stage}`;
+import { appContext } from '../constants/config';
 
 const app = new cdk.App({
-  context: {
-    'ns': ns,
-    'availabilityZones': ['ap-northeast-1a', 'ap-northeast-1c']
-  }
+  context: appContext,
 });
 
-const vpcStack = new VpcStack(app, `${ns}VpcStack`);
-const mskStack = new MskStack(app, `${ns}MskStack`, {
+const vpcStack = new VpcStack(app, `${appContext.ns}VpcStack`);
+const mskStack = new MskStack(app, `${appContext.ns}MskStack`, {
   vpc: vpcStack.vpc,
   securytyGroup: vpcStack.securityGroup,
 });
 mskStack.addDependency(vpcStack);
 
 const tags = cdk.Tags.of(app)
-tags.add(`codebrick:namespace`, ns);
-tags.add(`codebrick:stage`, stage);
+tags.add(`codebrick:namespace`, appContext.ns);
+
+app.synth();
