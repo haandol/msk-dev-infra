@@ -18,7 +18,7 @@ export class MskStack extends Stack {
 
     this.cluster = new msk.Cluster(this, `MskCluster`, {
       clusterName: `${ns.toLowerCase()}`,
-      kafkaVersion: msk.KafkaVersion.V2_8_1,
+      kafkaVersion: msk.KafkaVersion.V2_6_1,
       numberOfBrokerNodes: 2,
       vpc: props.vpc,
       vpcSubnets: { subnetType: ec2.SubnetType.PRIVATE_WITH_NAT },
@@ -27,7 +27,7 @@ export class MskStack extends Stack {
       ebsStorageInfo: { volumeSize: 100 },
       monitoring: {
         clusterMonitoringLevel: msk.ClusterMonitoringLevel.PER_TOPIC_PER_PARTITION,
-        enablePrometheusJmxExporter: false,
+        enablePrometheusJmxExporter: true,
         enablePrometheusNodeExporter: true,
       },
       removalPolicy: RemovalPolicy.DESTROY,
